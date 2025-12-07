@@ -1,5 +1,0 @@
-jaclang
-fastapi
-uvicorn
-jac-client
-
