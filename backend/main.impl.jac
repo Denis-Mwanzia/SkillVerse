@@ -30,8 +30,8 @@ impl UserProfile.email_exists {
         if (u.email == email) {
             return true;
         }
-        return false;
     }
+    return false;
     disengage;
 }
 impl UserProfile.email_format {
