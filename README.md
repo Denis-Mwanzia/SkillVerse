@@ -134,7 +134,7 @@ bun install
 3. Create environment file:
 ```bash
 # Create .env.local
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=http://localhost:8080
 ```
 
 4. Start the development server:
@@ -146,7 +146,7 @@ yarn dev
 bun dev
 ```
 
-The application will be available at `http://localhost:5173`
+The application will be available at `http://localhost:8080`
 
 ## 📝 Available Scripts
 
