@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useQueryClient } from '@tanstack/react-query';
-import { toast } from '@/hooks/use-toast';
+import { useNotification } from '@/hooks/useNotification';
 import { env } from '@/utils/env';
 import { logger } from '@/utils/logger';
 
@@ -10,6 +10,7 @@ const SOCKET_URL = env.VITE_SOCKET_URL;
 export function useSocket(userId?: string) {
   const socketRef = useRef<Socket | null>(null);
   const queryClient = useQueryClient();
+  const { notifySuccess, notifyInfo } = useNotification();
 
   useEffect(() => {
     if (!userId) return;
@@ -28,18 +29,20 @@ export function useSocket(userId?: string) {
 
     socket.on('skill_updated', (data) => {
       queryClient.invalidateQueries({ queryKey: ['skillGraph', userId] });
-      toast({
-        title: 'Skill Updated',
-        description: `${data.skill.name} has been updated`,
-      });
+      notifySuccess(
+        'Skill Updated',
+        `${data.skill.name} has been updated`,
+        { persistent: true, actionUrl: '/skills' }
+      );
     });
 
     socket.on('trend_alert', (data) => {
       queryClient.invalidateQueries({ queryKey: ['trends'] });
-      toast({
-        title: 'Trend Alert',
-        description: `${data.skillName} is ${data.trend}!`,
-      });
+      notifyInfo(
+        'Trend Alert',
+        `${data.skillName} is ${data.trend}!`,
+        { persistent: true, actionUrl: '/trends' }
+      );
     });
 
     socket.on('quiz_completed', (data) => {

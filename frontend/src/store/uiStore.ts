@@ -12,16 +12,21 @@ interface UIState {
   setTheme: (theme: 'light' | 'dark' | 'system') => void;
   openModal: (modalId: string) => void;
   closeModal: () => void;
-  addNotification: (notification: Omit<Notification, 'id'>) => void;
+  addNotification: (notification: Omit<Notification, 'id' | 'read'>) => void;
   removeNotification: (id: string) => void;
+  markAsRead: (id: string) => void;
+  markAllAsRead: () => void;
+  clearAllNotifications: () => void;
 }
 
-interface Notification {
+export interface Notification {
   id: string;
   type: 'info' | 'success' | 'warning' | 'error';
   title: string;
   message: string;
   timestamp: number;
+  read?: boolean;
+  actionUrl?: string;
 }
 
 export const useUIStore = create<UIState>()(
@@ -39,14 +44,26 @@ export const useUIStore = create<UIState>()(
       addNotification: (notification) =>
         set((state) => ({
           notifications: [
+            { ...notification, id: `notif_${Date.now()}`, read: false },
             ...state.notifications,
-            { ...notification, id: `notif_${Date.now()}` },
-          ],
+          ].slice(0, 50), // Limit to 50 notifications
         })),
       removeNotification: (id) =>
         set((state) => ({
           notifications: state.notifications.filter((n) => n.id !== id),
         })),
+      markAsRead: (id) =>
+        set((state) => ({
+          notifications: state.notifications.map((n) =>
+            n.id === id ? { ...n, read: true } : n
+          ),
+        })),
+      markAllAsRead: () =>
+        set((state) => ({
+          notifications: state.notifications.map((n) => ({ ...n, read: true })),
+        })),
+      clearAllNotifications: () =>
+        set({ notifications: [] }),
     }),
     {
       name: 'skillverse-ui',

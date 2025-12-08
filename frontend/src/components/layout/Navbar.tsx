@@ -1,4 +1,4 @@
-import { Bell, Search, Moon, Sun, LogOut } from 'lucide-react';
+import { Search, Moon, Sun, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,7 @@ import {
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useLocalTheme } from '@/hooks/useLocalTheme';
 import { useAuth } from '@/hooks/useAuth';
+import { NotificationCenter } from '@/components/notifications/NotificationCenter';
 
 export function Navbar() {
   const { theme, setTheme } = useLocalTheme();
@@ -44,12 +45,7 @@ export function Navbar() {
           {theme === 'dark' ? <Sun className="h-4 w-4 sm:h-5 sm:w-5" /> : <Moon className="h-4 w-4 sm:h-5 sm:w-5" />}
         </Button>
 
-        <Button variant="ghost" size="icon" className="relative text-muted-foreground h-9 w-9 sm:h-10 sm:w-10">
-          <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
-          <span className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-destructive text-destructive-foreground text-[10px] sm:text-xs flex items-center justify-center">
-            3
-          </span>
-        </Button>
+        <NotificationCenter />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
