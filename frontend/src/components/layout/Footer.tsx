@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Github, Twitter, Linkedin, Mail, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 import { SkillVerseLogo } from '@/components/ui/skillverse-logo';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/utils/motion';
@@ -32,11 +32,44 @@ export function Footer() {
     ],
   };
 
+  // X/Twitter icon as SVG component
+  const XIcon = ({ className }: { className?: string }) => (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: 'https://github.com/skillverse' },
-    { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/skillverse' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/skillverse' },
-    { name: 'Email', icon: Mail, href: 'mailto:contact@skillverse.ai' },
+    {
+      name: 'GitHub',
+      icon: Github,
+      href: 'https://github.com/skillverse',
+      hoverColor: 'hover:bg-[#24292e] hover:text-white dark:hover:bg-[#24292e]',
+    },
+    {
+      name: 'X (Twitter)',
+      icon: XIcon,
+      href: 'https://twitter.com/skillverse',
+      hoverColor: 'hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black',
+      customIcon: true,
+    },
+    {
+      name: 'LinkedIn',
+      icon: Linkedin,
+      href: 'https://linkedin.com/company/skillverse',
+      hoverColor: 'hover:bg-[#0077b5] hover:text-white dark:hover:bg-[#0077b5]',
+    },
+    {
+      name: 'Email',
+      icon: Mail,
+      href: 'mailto:contact@skillverse.ai',
+      hoverColor: 'hover:bg-primary hover:text-primary-foreground',
+    },
   ];
 
   return (
@@ -55,21 +88,39 @@ export function Footer() {
             <p className="text-sm text-muted-foreground mb-4 max-w-md">
               Your AI-powered career intelligence platform. Track skills, analyze gaps, and accelerate your career growth with data-driven insights.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
+                const isCustom = social.customIcon;
                 return (
                   <motion.a
                     key={social.name}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={prefersReducedMotion ? {} : { scale: 1.1, y: -2 }}
-                    whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-                    className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground text-muted-foreground transition-colors"
-                    aria-label={social.name}
+                    whileHover={prefersReducedMotion ? {} : { scale: 1.15, y: -3 }}
+                    whileTap={prefersReducedMotion ? {} : { scale: 0.9 }}
+                    className={`
+                      flex items-center justify-center 
+                      w-11 h-11 sm:w-12 sm:h-12
+                      rounded-xl 
+                      bg-muted/80 
+                      text-muted-foreground
+                      border border-border/50
+                      transition-all duration-300
+                      ${social.hoverColor}
+                      hover:border-transparent
+                      hover:shadow-lg
+                      focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
+                    `}
+                    aria-label={`Visit our ${social.name} page`}
+                    title={social.name}
                   >
-                    <Icon className="h-5 w-5" />
+                    {isCustom ? (
+                      <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                    ) : (
+                      <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                    )}
                   </motion.a>
                 );
               })}
