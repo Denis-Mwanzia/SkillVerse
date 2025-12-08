@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, TrendingUp, MapPin, DollarSign } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -14,7 +15,7 @@ interface RoleMatchCardProps {
   index?: number;
 }
 
-export function RoleMatchCard({ recommendation, index = 0 }: RoleMatchCardProps) {
+export const RoleMatchCard = memo(function RoleMatchCard({ recommendation, index = 0 }: RoleMatchCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const matchColor = recommendation.matchScore >= 80 ? 'text-primary' : recommendation.matchScore >= 60 ? 'text-chart-3' : 'text-chart-4';
   
@@ -30,6 +31,8 @@ export function RoleMatchCard({ recommendation, index = 0 }: RoleMatchCardProps)
       }}
       whileHover={prefersReducedMotion ? {} : { y: -4, scale: 1.01 }}
       className="group relative rounded-xl border border-border bg-gradient-to-br from-card to-card/50 p-6 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+      role="article"
+      aria-labelledby={`role-${recommendation.id}`}
     >
       {/* Decorative gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-primary/5 group-hover:to-primary/5 transition-all duration-300 pointer-events-none" />
@@ -81,7 +84,10 @@ export function RoleMatchCard({ recommendation, index = 0 }: RoleMatchCardProps)
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             <div className="flex-1 min-w-0">
-              <h3 className="text-lg sm:text-xl font-bold text-card-foreground mb-1 group-hover:text-primary transition-colors">
+              <h3 
+                id={`role-${recommendation.id}`}
+                className="text-lg sm:text-xl font-bold text-card-foreground mb-1 group-hover:text-primary transition-colors"
+              >
                 {recommendation.title}
               </h3>
               {recommendation.company && (
@@ -91,11 +97,11 @@ export function RoleMatchCard({ recommendation, index = 0 }: RoleMatchCardProps)
                 </div>
               )}
               <div className="flex flex-wrap items-center gap-2">
-                <DollarSign className="h-4 w-4 text-chart-3" />
-                <p className="text-base sm:text-lg font-bold text-primary">
+                <DollarSign className="h-4 w-4 text-chart-3" aria-hidden="true" />
+                <p className="text-base sm:text-lg font-bold text-primary" aria-label={`Salary range: ${formatCurrency(recommendation.salary.min)} to ${formatCurrency(recommendation.salary.max)} per year`}>
                   {formatCurrency(recommendation.salary.min)} - {formatCurrency(recommendation.salary.max)}
+                  <span className="text-xs text-muted-foreground">/year</span>
                 </p>
-                <span className="text-xs text-muted-foreground">/year</span>
               </div>
             </div>
             <Button variant="outline" size="sm" asChild className="group/btn w-full sm:w-auto">
@@ -146,4 +152,4 @@ export function RoleMatchCard({ recommendation, index = 0 }: RoleMatchCardProps)
       </div>
     </motion.div>
   );
-}
+});
