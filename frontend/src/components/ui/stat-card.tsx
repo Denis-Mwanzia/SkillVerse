@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/utils/motion';
@@ -17,7 +18,7 @@ interface StatCardProps {
   progress?: number; // 0-100 for progress indicator
 }
 
-export function StatCard({ 
+export const StatCard = memo(function StatCard({ 
   title, 
   value, 
   subtitle, 
@@ -45,6 +46,8 @@ export function StatCard({
         variantStyles[variant],
         className
       )}
+      role="article"
+      aria-labelledby={`stat-${title.replace(/\s+/g, '-').toLowerCase()}`}
     >
       {/* Decorative gradient overlay on hover */}
       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/5 group-hover:via-primary/5 group-hover:to-primary/5 transition-all duration-300 pointer-events-none" />
@@ -52,7 +55,12 @@ export function StatCard({
       <div className="relative flex items-start justify-between h-full">
         <div className="flex-1 min-w-0 flex flex-col h-full">
           <div className="flex items-center gap-2 mb-3 min-h-[20px]">
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{title}</p>
+            <p 
+              id={`stat-${title.replace(/\s+/g, '-').toLowerCase()}`}
+              className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+            >
+              {title}
+            </p>
             {trend && (
               <motion.div
                 initial={false}
@@ -80,6 +88,8 @@ export function StatCard({
             animate={{ scale: prefersReducedMotion ? 1 : [1, 1.05, 1] }}
             transition={{ duration: 0.3, delay: 0.1 }}
             className="text-4xl font-bold text-card-foreground tracking-tight mb-2"
+            aria-live="polite"
+            aria-atomic="true"
           >
             {value}
           </motion.p>
@@ -94,7 +104,14 @@ export function StatCard({
           <div className="mt-auto pt-2">
             {progress !== undefined ? (
               <>
-                <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+                <div 
+                  className="h-1.5 w-full rounded-full bg-muted overflow-hidden"
+                  role="progressbar"
+                  aria-valuenow={Math.round(progress)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-label={`${title} progress: ${Math.round(progress)}%`}
+                >
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
@@ -102,7 +119,7 @@ export function StatCard({
                     className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full"
                   />
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">{Math.round(progress)}% complete</p>
+                <p className="text-xs text-muted-foreground mt-1 sr-only">{Math.round(progress)}% complete</p>
               </>
             ) : (
               <div className="h-[18px]"></div>
@@ -130,4 +147,4 @@ export function StatCard({
       </div>
     </motion.div>
   );
-}
+});

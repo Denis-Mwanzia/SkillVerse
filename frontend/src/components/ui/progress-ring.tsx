@@ -23,8 +23,22 @@ export function ProgressRing({
   const offset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className={cn('relative inline-flex items-center justify-center w-full h-full', className)} style={{ width: size, height: size }}>
-      <svg width={size} height={size} className="transform -rotate-90 absolute inset-0" style={{ width: size, height: size }}>
+    <div 
+      className={cn('relative inline-flex items-center justify-center w-full h-full', className)} 
+      style={{ width: size, height: size }}
+      role="progressbar"
+      aria-valuenow={Math.round(value)}
+      aria-valuemin={0}
+      aria-valuemax={max}
+      aria-label={`Progress: ${Math.round(percentage)}%`}
+    >
+      <svg 
+        width={size} 
+        height={size} 
+        className="transform -rotate-90 absolute inset-0" 
+        style={{ width: size, height: size }}
+        aria-hidden="true"
+      >
         {/* Background circle */}
         <circle
           cx={size / 2}

@@ -38,10 +38,12 @@ export function SkillBadge({
         sizeClasses[size],
         className
       )}
+      role="status"
+      aria-label={`${name} skill${level !== undefined ? ` at ${level}% proficiency` : ''} - ${proficiency} level`}
     >
       {name}
       {showLevel && level !== undefined && (
-        <span className="opacity-70">({level}%)</span>
+        <span className="opacity-70" aria-hidden="true">({level}%)</span>
       )}
     </span>
   );
