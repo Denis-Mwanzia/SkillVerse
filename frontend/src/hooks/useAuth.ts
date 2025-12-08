@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import { useAuthStore } from '@/store/uiStore';
 import { authApi } from '@/api/auth';
 import { toast } from '@/hooks/use-toast';
+import { tokenStorage } from '@/utils/storage';
 
 export function useAuth() {
   const { user, isAuthenticated, isLoading, setUser, setIsLoading, logout } = useAuthStore();
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('access_token');
+      const token = tokenStorage.getAccessToken();
       if (!token) {
         setIsLoading(false);
         return;
@@ -34,8 +35,7 @@ export function useAuth() {
   const login = async (email: string, password: string) => {
     try {
       const response = await authApi.login({ email, password });
-      localStorage.setItem('access_token', response.access_token);
-      localStorage.setItem('refresh_token', response.refresh_token);
+      tokenStorage.setTokens(response.access_token, response.refresh_token);
       setUser(response.user);
       toast({ title: 'Welcome back!', description: `Logged in as ${response.user.email}` });
       return response.user;

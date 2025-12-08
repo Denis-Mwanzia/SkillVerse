@@ -3,6 +3,7 @@ import { io, Socket } from 'socket.io-client';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 import { env } from '@/utils/env';
+import { logger } from '@/utils/logger';
 
 const SOCKET_URL = env.VITE_SOCKET_URL;
 
@@ -22,7 +23,7 @@ export function useSocket(userId?: string) {
     });
 
     socket.on('connect', () => {
-      console.log('Socket connected');
+      logger.info('Socket connected', { userId });
     });
 
     socket.on('skill_updated', (data) => {
@@ -50,7 +51,7 @@ export function useSocket(userId?: string) {
     });
 
     socket.on('disconnect', () => {
-      console.log('Socket disconnected');
+      logger.info('Socket disconnected', { userId });
     });
 
     socketRef.current = socket;

@@ -1,10 +1,16 @@
 import { useCallback } from 'react';
 import { toast } from '@/hooks/use-toast';
 import { AxiosError } from 'axios';
+import { logger } from '@/utils/logger';
 
 interface ErrorHandlerOptions {
   showToast?: boolean;
   fallbackMessage?: string;
+}
+
+interface ErrorResponse {
+  message?: string;
+  detail?: string;
 }
 
 export function useErrorHandler() {
@@ -17,7 +23,7 @@ export function useErrorHandler() {
     if (error instanceof AxiosError) {
       if (error.response) {
         // Server responded with error status
-        const data = error.response.data as any;
+        const data = error.response.data as ErrorResponse | undefined;
         message = data?.message || data?.detail || error.message || fallbackMessage;
         title = `Error ${error.response.status}`;
       } else if (error.request) {
@@ -40,10 +46,8 @@ export function useErrorHandler() {
       });
     }
 
-    // Log error for debugging (development only)
-    if (import.meta.env.DEV) {
-      console.error('Error handled:', error);
-    }
+    // Log error using logger utility
+    logger.error(`Error handled: ${title}`, error);
 
     return { message, title };
   }, []);

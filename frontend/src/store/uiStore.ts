@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { tokenStorage } from '@/utils/storage';
 
 interface UIState {
   sidebarCollapsed: boolean;
@@ -72,8 +73,7 @@ export const useAuthStore = create<AuthState>()(
       setUser: (user) => set({ user, isAuthenticated: !!user, isLoading: false }),
       setIsLoading: (loading) => set({ isLoading: loading }),
       logout: () => {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        tokenStorage.clearTokens();
         set({ user: null, isAuthenticated: false });
       },
     }),

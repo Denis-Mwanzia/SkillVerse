@@ -1,5 +1,7 @@
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { env } from '@/utils/env';
+import { tokenStorage } from '@/utils/storage';
+import { logger } from '@/utils/logger';
 
 const API_BASE_URL = env.VITE_API_URL;
 
@@ -33,7 +35,7 @@ export const axiosInstance: AxiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('access_token');
+    const token = tokenStorage.getAccessToken();
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -66,23 +68,24 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      const refreshToken = localStorage.getItem('refresh_token');
+      const refreshToken = tokenStorage.getRefreshToken();
 
       if (!refreshToken) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        tokenStorage.clearTokens();
         window.location.href = '/login';
         return Promise.reject(error);
       }
 
       try {
-        const response = await axios.post(`${API_BASE_URL}/api/auth/refresh`, {
-          refresh_token: refreshToken,
-        });
+        const response = await axios.post<{ access_token: string; refresh_token: string }>(
+          `${API_BASE_URL}/api/auth/refresh`,
+          {
+            refresh_token: refreshToken,
+          }
+        );
 
         const { access_token, refresh_token } = response.data;
-        localStorage.setItem('access_token', access_token);
-        localStorage.setItem('refresh_token', refresh_token);
+        tokenStorage.setTokens(access_token, refresh_token);
 
         processQueue(null, access_token);
 
@@ -93,8 +96,8 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError as Error, null);
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        tokenStorage.clearTokens();
+        logger.error('Token refresh failed', refreshError);
         window.location.href = '/login';
         return Promise.reject(refreshError);
       } finally {
@@ -105,18 +108,23 @@ axiosInstance.interceptors.response.use(
     // Enhance error messages for better UX
     if (error.response) {
       const status = error.response.status;
-      const data = error.response.data as any;
+      interface ErrorResponse {
+        message?: string;
+        detail?: string;
+      }
+      const data = error.response.data as ErrorResponse | undefined;
 
       // Create user-friendly error messages
-      const enhancedError = new Error(
-        data?.message || 
+      const message =
+        data?.message ||
         data?.detail ||
-        status === 403 ? 'You do not have permission to perform this action' :
+        (status === 403 ? 'You do not have permission to perform this action' :
         status === 404 ? 'The requested resource was not found' :
         status === 429 ? 'Too many requests. Please try again later' :
         status >= 500 ? 'Server error. Please try again later' :
-        'An error occurred while processing your request'
-      ) as AxiosError;
+        'An error occurred while processing your request');
+
+      const enhancedError = new Error(message) as AxiosError;
 
       Object.assign(enhancedError, {
         response: error.response,
