@@ -190,7 +190,10 @@ export function NotificationCenter() {
                                 variant="ghost"
                                 size="icon"
                                 className="h-6 w-6 flex-shrink-0"
-                                onClick={() => removeNotification(notif.id)}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  removeNotification(notif.id);
+                                }}
                                 aria-label="Remove notification"
                               >
                                 <X className="h-3 w-3" />

@@ -62,7 +62,7 @@ export function useSocket(userId?: string) {
     return () => {
       socket.disconnect();
     };
-  }, [userId, queryClient]);
+  }, [userId, queryClient, notifySuccess, notifyInfo]);
 
   const emit = useCallback((event: string, data: unknown) => {
     if (socketRef.current?.connected) {
