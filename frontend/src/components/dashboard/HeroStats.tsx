@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { TrendingUp, BookOpen, Brain, Flame, Award, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { StatCard } from '@/components/ui/stat-card';
@@ -8,7 +9,7 @@ interface HeroStatsProps {
   stats: DashboardStats;
 }
 
-export function HeroStats({ stats }: HeroStatsProps) {
+export const HeroStats = memo(function HeroStats({ stats }: HeroStatsProps) {
   const prefersReducedMotion = useReducedMotion();
   
   const statCards = [
@@ -70,4 +71,4 @@ export function HeroStats({ stats }: HeroStatsProps) {
       ))}
     </div>
   );
-}
+});
