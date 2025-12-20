@@ -1,5 +1,20 @@
-jaclang
-fastapi
-uvicorn
-jac-client
+# SkillVerse Backend Requirements
+# Python packages needed for the Jac backend
 
+# Core Jac dependencies (from littleX pattern)
+# Note: jac-cloud 0.2.11 requires jaclang==0.9.0, so we use compatible versions
+byllm<0.4.8  # 0.4.7 is compatible with jaclang 0.9.0
+jaclang==0.9.0  # Required by jac-cloud
+jac-cloud
+pillow
+python-dotenv
+requests
+
+# Data science / ML
+numpy
+scikit-learn
+
+# Additional utilities (already included in jac-cloud)
+# pyjwt
+# passlib[bcrypt]
+# python-multipart
