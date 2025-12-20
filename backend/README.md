@@ -207,21 +207,3 @@ This backend is designed to work with the React frontend in `/frontend`.
 **Authentication**: JWT tokens (ready to implement)
 **Real-time**: WebSocket support (ready to implement)
 
----
-
-## 📖 Documentation
-
-See project root for:
-- `FULL_IMPLEMENTATION_SUCCESS.md` - Complete feature list
-- `IMPLEMENTATION_COMPLETE.md` - Implementation details
-- `FINAL_SUMMARY.md` - Quick reference
-
----
-
-## 🎉 You're All Set!
-
-The backend is complete and working. Just start it and connect your frontend!
-
-```bash
-source venv/bin/activate && jac serve skillverse_full.jac --port 8000
-```
