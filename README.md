@@ -1,338 +1,162 @@
-# SkillVerse
+# Skillverse – Smart Career Path Navigator
 
-> AI-powered career and skill intelligence platform that helps professionals track skills, analyze gaps, and accelerate career growth with data-driven insights.
+> AI-powered career navigation platform that helps users understand where they are, where they want to go, and exactly how to get there—using real-time job-market intelligence and explainable skill graphs.
 
-## 🚀 Overview
+## 🎯 Vision
 
-SkillVerse is a comprehensive career intelligence platform built with modern technologies to provide personalized skill tracking, gap analysis, learning path recommendations, and market trend insights. The platform combines AI-powered backend intelligence with a responsive, production-ready frontend.
+Skillverse is a Jac full-stack, AI-powered career navigation platform designed to bridge the gap between where professionals are today and where they want to be tomorrow. By leveraging real-time job-market intelligence and explainable skill graphs, Skillverse provides personalized, actionable guidance for career advancement.
 
-## ✨ Features
+## 🏗️ Architecture Overview
 
-### Core Features
-- **📊 Dashboard** - Comprehensive overview of your skills, progress, and career metrics
-- **🕸️ Skill Graph** - Interactive visualization of your skill ecosystem and dependencies
-- **📄 Resume Analyzer** - AI-powered resume parsing and skill extraction
-- **🎯 Gap Analysis** - Identify skill gaps for target roles and positions
-- **📚 Learning Path** - Personalized learning recommendations based on your goals
-- **📈 Market Trends** - Real-time insights into skill demand and market trends
-- **🧠 Skill Quizzes** - Interactive assessments to validate and improve skills
-- **💡 What-If Simulator** - Explore career scenarios and potential outcomes
-- **👤 User Profile** - Comprehensive profile management with preferences and statistics
+### Frontend Stack
+- **React 18** + **Vite** – Modern, fast UI framework
+- **TailwindCSS** – Utility-first CSS for rapid styling
+- **Zustand** – Lightweight client-side state management
+- **Framer Motion** – Polished animations and transitions
+- **React Hook Form** – Structured user input handling
+- **Jac Client** – Seamless communication with backend walkers
+- **React Flow** – Visual skill graph navigation
+- **Recharts** – Skill demand trends visualization
+- **Socket.io-client** – Real-time market intelligence updates
 
-### Key Capabilities
-- Real-time skill tracking and updates
-- AI-powered skill recommendations
-- Interactive data visualizations
-- Responsive design (mobile, tablet, desktop)
-- Dark mode support
-- Real-time notifications via WebSocket
-- Role-based recommendations with salary insights
+### Backend Stack
+- **JacLang** – AI-native programming language
+- **OSP Graph** – Graph modeling of users, skills, roles, courses, certifications, and job postings
+- **Walkers** – Resume parsing, graph updates, job-market ingestion, and progress tracking
+- **byLLM** – AI-powered extraction, gap analysis, summarization, and roadmap generation
 
-## 🏗️ Architecture
+## 📋 Platform Structure
 
-SkillVerse is built with a modern full-stack architecture:
+### Public Portfolio (Before Login / Signup)
 
-```
-SkillVerse/
-├── backend/          # Jac-based AI backend with FastAPI
-│   ├── main.jac      # Main application entry point
-│   ├── user_core.jac # User management core
-│   ├── walkers_file.jac # Multi-agent walkers
-│   └── requirements.txt
-└── frontend/         # React + TypeScript frontend
-    ├── src/
-    │   ├── api/      # API client layer
-    │   ├── components/ # React components
-    │   ├── pages/    # Route pages
-    │   ├── hooks/    # Custom React hooks
-    │   ├── store/    # State management
-    │   └── utils/    # Utility functions
-    └── package.json
-```
+Before authentication, Skillverse functions as a professional product portfolio:
 
-## 🛠️ Tech Stack
+- **Home** – Vision, value proposition, and how Skillverse works
+- **About** – Product details and "Built by: a team of 3"
+- **Contact** – Feedback and inquiry form
+- **Get Started** – Login / Signup entry point
 
-### Backend
-- **Jac Language** - AI-native programming language
-- **FastAPI** - High-performance Python web framework
-- **OSP (Open Service Protocol)** - Service orchestration
-- **Gemini 2.5 Flash** - LLM for AI-powered features
-- **Uvicorn** - ASGI server
+This stage focuses on branding, clarity, and trust-building.
 
-### Frontend
-- **React 18** - Modern UI library
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Next-generation build tool
-- **TailwindCSS** - Utility-first CSS framework
-- **React Router v6** - Client-side routing
-- **TanStack Query** - Server state management
-- **Zustand** - Lightweight state management
-- **Framer Motion** - Animation library
-- **React Flow** - Graph visualization
-- **Recharts** - Chart library
-- **Axios** - HTTP client
-- **Socket.io-client** - Real-time communication
-- **Zod** - Schema validation
-- **React Hook Form** - Form management
+### Authenticated Platform (After Login / Signup)
 
-## 📦 Prerequisites
+Once authenticated, users unlock the full Skillverse experience:
 
-### Backend
-- Python 3.9+
-- Jac Language runtime
-- Gemini API key (or compatible LLM API)
+#### 1. Resume / CV Intelligence (byLLM-powered)
+- Users upload a resume/CV
+- byLLM extracts structured data:
+  - Skills (technical & soft)
+  - Certifications
+  - Education background
+  - Work experience
+  - Tools and technologies
+- Extracted data is mapped directly into the OSP graph as nodes and edges
 
-### Frontend
-- Node.js 18+ or Bun
-- npm, yarn, or bun package manager
+#### 2. Career Target Selection
+- Users select:
+  - Target job roles
+  - Career tracks
+  - Emerging or high-growth skills
+- Roles and skills are pulled from live job-market signals
+
+#### 3. Skill Gap Analysis (byLLM)
+- byLLM compares:
+  - Current skill graph (from resume + progress)
+  - Required skills for selected roles
+  - Emerging market-demand skills
+- Identifies:
+  - Missing skills
+  - Weak or outdated skills
+  - Priority skills based on demand
+
+#### 4. Personalized Learning Roadmap
+- byLLM generates a step-by-step learning roadmap:
+  - Courses (online, certifications, bootcamps)
+  - Projects to build practical experience
+  - Recommended timelines and milestones
+- Roadmap adapts dynamically as:
+  - User completes milestones
+  - Market demand changes
+
+#### 5. Visual Career Navigation
+- **React Flow** displays:
+  - Skill → Course → Role relationships
+  - Clear visual explanation of how learning leads to careers
+- **Recharts** shows:
+  - Skill demand trends
+  - Role popularity over time
+
+#### 6. Progress Tracking & Feedback
+- Users:
+  - Mark skills as learned
+  - Upload certificates
+  - Log completed projects
+- Walkers update the OSP graph instantly via Jac Client `spawn()`
+
+#### 7. Real-Time Market Intelligence
+- Socket.io-client pushes:
+  - Alerts for emerging high-demand skills
+  - Notifications when user-selected roles shift in demand
+- Learning plans are automatically revised
+
+#### 8. Smart Recommendations
+- Suggested:
+  - Portfolio projects aligned with target roles
+  - Certifications with highest ROI
+  - Alternative career paths based on existing skills
+  - Career readiness score indicating how close a user is to a role
+  - Resume improvement tips generated from skill gaps
+  - Periodic re-analysis without re-uploading CV
 
 ## 🚀 Getting Started
 
-### Backend Setup
+*Setup instructions will be added as the project is built.*
 
-1. Navigate to the backend directory:
-```bash
-cd backend
+## 📦 Project Structure
+
+```
+Skillverse/
+├── backend/          # JacLang backend with OSP graph and walkers
+│   ├── *.jac         # Jac source files
+│   └── requirements.txt
+└── frontend/         # React + Vite frontend
+    ├── src/
+    │   ├── pages/    # Public (Home, About, Contact) + Auth pages
+    │   ├── components/ # Reusable UI components
+    │   ├── store/    # Zustand state management
+    │   ├── hooks/    # Custom React hooks
+    │   └── api/      # Jac Client integration
+    └── package.json
 ```
 
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+## 🔑 Key Features
 
-3. Set up environment variables:
-```bash
-# Create a .env file
-GEMINI_API_KEY=your_api_key_here
-```
-
-4. Run the backend server:
-```bash
-# Start FastAPI server
-uvicorn main:app --reload
-
-# Or run Jac application
-jac run main.jac
-```
-
-### Frontend Setup
-
-1. Navigate to the frontend directory:
-```bash
-cd frontend
-```
-
-2. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-# or
-bun install
-```
-
-3. Create environment file:
-```bash
-# Create .env.local
-VITE_API_URL=http://localhost:8080
-```
-
-4. Start the development server:
-```bash
-npm run dev
-# or
-yarn dev
-# or
-bun dev
-```
-
-The application will be available at `http://localhost:8080`
-
-## 📝 Available Scripts
-
-### Frontend Scripts
-
-```bash
-# Development
-npm run dev              # Start development server
-npm run build           # Build for production
-npm run preview         # Preview production build
-
-# Testing
-npm test                # Run unit tests
-npm run test:ui         # Run tests with UI
-npm run test:coverage   # Generate coverage report
-npm run test:e2e        # Run E2E tests
-npm run test:e2e:open   # Open Cypress UI
-
-# Code Quality
-npm run lint            # Run ESLint
-```
-
-## 🌐 API Endpoints
-
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-- `GET /api/auth/profile` - Get user profile
-- `PATCH /api/auth/profile` - Update profile
-- `POST /api/auth/change-password` - Change password
-
-### Skills
-- `GET /api/skill-graph/{user_id}` - Get skill graph
-- `POST /api/skills` - Add new skill
-- `PUT /api/skills/{skill_id}` - Update skill
-- `POST /api/upload-resume` - Upload and parse resume
-
-### Career Intelligence
-- `GET /api/gap-analysis/{user_id}` - Get gap analysis
-- `GET /api/learning-path/{user_id}` - Get learning recommendations
-- `GET /api/role-recommendations/{user_id}` - Get role suggestions
-- `GET /api/trend-signals` - Get market trends
-
-### Learning
-- `GET /api/quizzes/{skill_id}` - Get quiz for skill
-- `POST /api/quiz-submit` - Submit quiz answers
-
-### Simulation
-- `POST /api/what-if` - Run career scenario simulation
-
-### Dashboard
-- `GET /api/dashboard/{user_id}` - Get dashboard data
-
-## 🎨 UI Components
-
-The frontend uses a component-based architecture with reusable UI components:
-
-- **Layout Components** - Navbar, Sidebar, Footer
-- **Dashboard Components** - Stats, Charts, Activity feeds
-- **Form Components** - Inputs, Selects, Validation
-- **Data Visualization** - Graphs, Charts, Skill badges
-- **Interactive** - Modals, Drawers, Tooltips
-
-## 🔒 Environment Variables
-
-### Frontend (.env.local)
-```env
-VITE_API_URL=http://localhost:8000
-VITE_SOCKET_URL=ws://localhost:8000
-```
-
-### Backend (.env)
-```env
-GEMINI_API_KEY=your_api_key
-DATABASE_URL=your_database_url
-SECRET_KEY=your_secret_key
-```
-
-## 🧪 Testing
-
-### Unit Tests
-```bash
-npm test
-```
-
-### E2E Tests
-```bash
-npm run test:e2e
-```
-
-### Test Coverage
-```bash
-npm run test:coverage
-```
-
-## 📦 Building for Production
-
-### Frontend
-```bash
-npm run build
-```
-
-The production build will be in the `dist/` directory, ready for deployment.
-
-### Docker Deployment
-
-A Dockerfile is included for containerized deployment:
-
-```bash
-docker build -t skillverse-frontend ./frontend
-docker run -p 80:80 skillverse-frontend
-```
-
-## 🌟 Key Features Deep Dive
-
-### Skill Graph
-- Interactive node-edge visualization
-- Drag, zoom, and pan capabilities
-- Skill dependencies and relationships
-- Real-time updates via WebSocket
-
-### Gap Analysis
-- Compare current skills with target roles
-- Priority-based gap identification
-- Actionable learning recommendations
-
-### What-If Simulator
-- Scenario-based career planning
-- Salary range projections
-- Effort estimation
-- Match score improvements
-
-### Learning Path
-- Personalized course recommendations
-- Progress tracking
-- Milestone-based learning
-- ETA calculations
-
-## 📱 Responsive Design
-
-SkillVerse is fully responsive and optimized for:
-- 📱 Mobile devices (320px+)
-- 📱 Tablets (768px+)
-- 💻 Desktop (1024px+)
-- 🖥️ Large screens (1280px+)
-
-## 🎯 Performance
-
-- Code splitting and lazy loading
-- Optimized bundle sizes
-- Skeleton loaders for better UX
-- Efficient state management
-- Real-time updates with minimal overhead
-
-## 🔐 Security
-
-- JWT-based authentication
-- Token refresh mechanism
-- Secure password handling
-- CORS configuration
-- Input validation and sanitization
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+- ✅ **Explainable Skill Graphs** – Visual representation of skill relationships
+- ✅ **Real-Time Market Intelligence** – Live job-market signals and alerts
+- ✅ **AI-Powered Analysis** – byLLM for resume parsing and gap analysis
+- ✅ **Dynamic Learning Roadmaps** – Adaptive plans that evolve with market changes
+- ✅ **Progress Tracking** – Real-time graph updates as users learn and grow
+- ✅ **Smart Recommendations** – Data-driven career guidance
 
 ## 📄 License
 
-This project is licensed under the terms specified in the LICENSE file.
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 👥 Team
 
-- Built with [Jac Language](https://github.com/Jaseci-Labs/jaseci)
-- UI components inspired by [shadcn/ui](https://ui.shadcn.com)
-- Icons from [Lucide React](https://lucide.dev)
+Built by a team of 3 passionate developers:
 
-## 📞 Support
+- **Denis Mwanzia**
+- **Doris Muasya**
+- **James Ngaruiya**
 
-For support, please open an issue in the GitHub repository or contact the development team.
+## 🏆 Hackathon
+
+This project was developed as part of a hackathon organized by:
+
+- **The Open University of Kenya (OUK)**
+- **BCS Technology International Pty Limited, Australia**
 
 ---
 
-**Built with ❤️ by the SkillVerse team**
+**Ready to navigate your career path? Let's build Skillverse!** 🚀
