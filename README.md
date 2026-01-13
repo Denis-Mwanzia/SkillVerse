@@ -110,23 +110,27 @@ Once authenticated, users unlock the full Skillverse experience:
 
 ## 🚀 Getting Started
 
-*Setup instructions will be added as the project is built.*
+### Running Jac Code
+
+Make sure node modules are installed:
+```bash
+npm install
+```
+
+To run your Jac code, use the Jac CLI:
+```bash
+jac serve app.jac
+```
 
 ## 📦 Project Structure
 
 ```
 Skillverse/
-├── backend/          # JacLang backend with OSP graph and walkers
-│   ├── *.jac         # Jac source files
-│   └── requirements.txt
-└── frontend/         # React + Vite frontend
-    ├── src/
-    │   ├── pages/    # Public (Home, About, Contact) + Auth pages
-    │   ├── components/ # Reusable UI components
-    │   ├── store/    # Zustand state management
-    │   ├── hooks/    # Custom React hooks
-    │   └── api/      # Jac Client integration
-    └── package.json
+├── app.jac          # Main Jac application file
+├── nodes.jac        # Graph node and edge definitions
+├── package.json     # Node.js dependencies
+├── public/          # Static assets
+└── static/          # Additional static resources
 ```
 
 ## 🔑 Key Features
