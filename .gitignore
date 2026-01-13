@@ -1,0 +1,16 @@
+# Build artifacts
+dist/
+build/
+node_modules/
+*.jir
+*.session
+*.session.*.json
+.babelrc
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
