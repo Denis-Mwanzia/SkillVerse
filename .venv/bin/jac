@@ -1,4 +1,4 @@
-#!/home/jay/SkillVerse/.venv/bin/python3.12
+#!/home/denis/SkillVerse/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
