@@ -1,0 +1,13 @@
+[project]
+name = "Skillverse"
+version = "1.0.0"
+
+[serve]
+base_route_app = "app"
+cl_route_prefix = "page"
+
+[plugins.client]
+enabled = true
+
+[plugins.client.package]
+scripts = { compile = "echo 'No compile step needed - Vite handles transpilation'" }

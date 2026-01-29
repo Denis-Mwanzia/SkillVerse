@@ -1,0 +1,26 @@
+{
+  "name": "Skillverse",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "compile": "echo 'No compile step needed - Vite handles transpilation'",
+    "build": "vite build --config .jac/client/configs/vite.config.js",
+    "dev": "vite dev --config .jac/client/configs/vite.config.js",
+    "preview": "vite preview --config .jac/client/configs/vite.config.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "modules": false
+        }
+      ],
+      "@babel/preset-react"
+    ]
+  }
+}

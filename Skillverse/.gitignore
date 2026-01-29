@@ -1,0 +1,64 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jac
+*.jac.bc
+*.jac.pyc
+.jac_cache/
+*.jir
+*.session
+*.session.users.json
+*.session.*.json
+
+# Build artifacts
+node_modules/
+.babelrc
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+server.log
+
+# Node (for frontend folder)
+frontend/dist/
+frontend/.vite/
+
+# Database
+*.db
+*.sqlite

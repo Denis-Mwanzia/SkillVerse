@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+/* Responsive base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Ensure images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Touch-friendly targets */
+button,
+a,
+input,
+textarea,
+select {
+  touch-action: manipulation;
+}
+
+/* Minimum touch target size */
+@media (max-width: 768px) {
+
+  button,
+  a[role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 220 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+    --primary: 252 100% 70%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 93%;
+    --secondary-foreground: 220 20% 10%;
+    --muted: 220 15% 93%;
+    --muted-foreground: 220 10% 45%;
+    --accent: 188 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --border: 220 15% 88%;
+    --ring: 252 100% 70%;
+    --radius: 1rem;
+    --font-display: 'Roboto', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+
+    --gradient-primary: linear-gradient(135deg, hsl(252, 100%, 70%) 0%, hsl(252, 100%, 65%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(188, 100%, 50%) 0%, hsl(188, 100%, 45%) 100%);
+    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(252, 100%, 70%, 0.12) 0%, transparent 50%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(252, 100%, 70%, 0.15) 0%, transparent 70%);
+    --gradient-mesh:
+      radial-gradient(at 40% 20%, hsl(252, 100%, 70%, 0.06) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsl(188, 100%, 50%, 0.04) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsl(0, 100%, 71%, 0.03) 0px, transparent 50%);
+
+    --shadow-sm: 0 1px 2px hsl(220, 20%, 10%, 0.03);
+    --shadow-md: 0 4px 16px hsl(220, 20%, 10%, 0.06);
+    --shadow-lg: 0 12px 40px hsl(220, 20%, 10%, 0.08);
+    --shadow-glow: 0 0 60px hsl(252, 100%, 70%, 0.2);
+    --shadow-glow-accent: 0 0 40px hsl(188, 100%, 50%, 0.15);
+  }
+
+  .dark {
+    --background: 230 25% 7%;
+    --foreground: 0 0% 95%;
+    --card: 230 20% 10%;
+    --card-foreground: 0 0% 95%;
+    --primary: 252 100% 75%;
+    --primary-foreground: 230 25% 7%;
+    --secondary: 230 15% 15%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 230 15% 15%;
+    --muted-foreground: 230 10% 55%;
+    --accent: 188 100% 55%;
+    --accent-foreground: 230 25% 7%;
+    --border: 230 15% 18%;
+    --ring: 252 100% 75%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(252, 100%, 75%) 0%, hsl(252, 100%, 70%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(188, 100%, 55%) 0%, hsl(188, 100%, 50%) 100%);
+    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(252, 100%, 75%, 0.2) 0%, transparent 50%);
+    --gradient-glow: radial-gradient(ellipse at center, hsl(252, 100%, 75%, 0.25) 0%, transparent 70%);
+    --gradient-mesh:
+      radial-gradient(at 40% 20%, hsl(252, 100%, 75%, 0.1) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsl(188, 100%, 55%, 0.08) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsl(0, 100%, 76%, 0.06) 0px, transparent 50%);
+
+    --shadow-sm: 0 1px 2px hsl(0, 0%, 0%, 0.2);
+    --shadow-md: 0 4px 16px hsl(0, 0%, 0%, 0.3);
+    --shadow-lg: 0 12px 40px hsl(0, 0%, 0%, 0.4);
+    --shadow-glow: 0 0 60px hsl(252, 100%, 75%, 0.3);
+    --shadow-glow-accent: 0 0 40px hsl(188, 100%, 55%, 0.2);
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-body);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+  }
+
+  * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@layer components {
+  .glass-strong {
+    @apply backdrop-blur-2xl border;
+    background-color: hsl(var(--card) / 0.8);
+    border-color: hsl(var(--border) / 0.6);
+  }
+
+  .glass {
+    @apply backdrop-blur-xl border;
+    background-color: hsl(var(--card) / 0.6);
+    border-color: hsl(var(--border) / 0.5);
+  }
+
+  .bg-gradient-hero {
+    background-image: var(--gradient-hero);
+  }
+
+  .bg-gradient-mesh {
+    background-image: var(--gradient-mesh);
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-accent {
+    background-image: var(--gradient-accent);
+  }
+
+  .bg-gradient-glow {
+    background-image: var(--gradient-glow);
+  }
+
+  .text-primary {
+    color: hsl(var(--primary));
+  }
+
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(135deg, hsl(252, 100%, 70%) 0%, hsl(252, 100%, 65%) 100%);
+  }
+
+  .text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-glow-accent {
+    box-shadow: var(--shadow-glow-accent);
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+  }
+
+  @keyframes pulse-slow {
+
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.5;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes orb-float {
+
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+      transform: translate(20px, -30px) scale(1.1);
+    }
+
+    50% {
+      transform: translate(-10px, -20px) scale(0.95);
+    }
+
+    75% {
+      transform: translate(-20px, 10px) scale(1.05);
+    }
+  }
+
+  @keyframes skill-float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+
+  /* Animated orb */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.3;
+    animation: orb-float 20s ease-in-out infinite;
+  }
+
+  .orb-primary {
+    background: hsl(var(--primary));
+  }
+
+  .orb-accent {
+    background: hsl(var(--accent));
+  }
+
+  /* Skill node styles */
+  .skill-node {
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--border) / 0.5);
+    background-color: hsl(var(--card) / 0.6);
+    animation: skill-float 4s ease-in-out infinite;
+  }
+
+  .skill-node:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Dot pattern */
+  .bg-dots {
+    background-image: radial-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Auth toggle styles - using ID selector for checkbox */
+  #auth-toggle:checked~* .auth-toggle-signin {
+    color: hsl(var(--muted-foreground));
+  }
+
+  #auth-toggle:checked~* .auth-toggle-signup {
+    color: hsl(var(--foreground));
+  }
+
+  /* Toggle switch background - uses primary-foreground (white in light, dark in dark) */
+  .auth-toggle-switch {
+    background-color: hsl(var(--primary-foreground));
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Checked state - same primary-foreground */
+  #auth-toggle:checked~* .auth-toggle-switch {
+    background-color: hsl(var(--primary-foreground));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Dark mode - primary-foreground */
+  .dark .auth-toggle-switch {
+    background-color: hsl(var(--primary-foreground));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark #auth-toggle:checked~* .auth-toggle-switch {
+    background-color: hsl(var(--primary-foreground));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Toggle button - primary color (purple) like skill-navigator */
+  .auth-toggle-button {
+    background-color: hsl(var(--primary));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .dark .auth-toggle-button {
+    background-color: hsl(var(--primary));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Button animation */
+  #auth-toggle:checked~* .auth-toggle-button {
+    transform: translateX(28px);
+  }
+
+  /* Icon visibility - icons use #6c63ff color */
+  .auth-toggle-icon {
+    color: #6c63ff !important;
+    transition: transform 0.3s ease;
+  }
+
+  /* FontAwesome SVG path styling */
+  .auth-toggle-button svg {
+    color: #6c63ff !important;
+    transition: transform 0.3s ease;
+  }
+
+  .auth-toggle-button svg path {
+    fill: #6c63ff !important;
+  }
+
+  /* Rotate icon 180 degrees when checked */
+  #auth-toggle:checked~* .auth-toggle-icon {
+    transform: rotate(180deg);
+    color: #6c63ff !important;
+  }
+
+  #auth-toggle:checked~* .auth-toggle-button svg {
+    transform: rotate(180deg);
+    color: #6c63ff !important;
+  }
+
+  #auth-toggle:checked~* .auth-toggle-button svg path {
+    fill: #6c63ff !important;
+  }
+
+  /* Dark mode - same #6c63ff color */
+  .dark .auth-toggle-button svg {
+    color: #6c63ff !important;
+  }
+
+  .dark .auth-toggle-button svg path {
+    fill: #6c63ff !important;
+  }
+
+  /* Dark mode checked state - rotate icon */
+  .dark #auth-toggle:checked~* .auth-toggle-icon {
+    transform: rotate(180deg);
+    color: #6c63ff !important;
+  }
+
+  .dark #auth-toggle:checked~* .auth-toggle-button svg {
+    transform: rotate(180deg);
+    color: #6c63ff !important;
+  }
+
+  .dark #auth-toggle:checked~* .auth-toggle-button svg path {
+    fill: #6c63ff !important;
+  }
+
+  /* Mobile menu animations */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      max-height: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      max-height: 500px;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 1;
+      max-height: 500px;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      max-height: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Navbar mobile menu item animations */
+  .navbar-mobile-menu {
+    animation: slideDown 0.3s ease-out forwards;
+  }
+
+  .navbar-mobile-menu-item {
+    animation: fadeInLeft 0.3s ease-out forwards;
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Custom scrollbar styles - match skill-navigator dashboard sidebar nav */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--border) / 0.8);
+  }
+
+  .scrollbar-thumb-border::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+  }
+
+  .scrollbar-track-transparent::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Grid pattern - match skill-navigator */
+  .bg-grid {
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+}
+
+@source "../app.jac";
+@source "../build/**/*.js";
+@source "./**/*.js";

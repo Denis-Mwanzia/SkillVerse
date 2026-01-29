@@ -3,15 +3,15 @@
 # ============================
 
 node User {
-    # Authentication fields
+    # Required fields (no defaults)
     has username: str;
     has email: str;
     has password_hash: str;
+    has name: str;
+    
+    # Optional fields (with defaults)
     has token: str = "";
     has token_created_at: float = 0.0;  # Unix timestamp
-    
-    # Profile fields
-    has name: str;
     has experience_level: str = "";   # beginner | intermediate | senior
     has goals: list[str] = [];
     has last_active: float = 0.0;  # Unix timestamp

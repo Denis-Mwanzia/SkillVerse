@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "compile": "echo 'No compile step needed - Vite handles transpilation'",
+    "build": "vite build --config vite.config.js",
+    "dev": "vite dev --config vite.config.js",
+    "preview": "vite preview --config vite.config.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.28.6",
+    "@babel/preset-env": "^7.28.6",
+    "@babel/preset-react": "^7.28.5",
+    "@tailwindcss/vite": "^4.1.18",
+    "@vitejs/plugin-react": "^5.1.2",
+    "tailwindcss": "^4.1.18",
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
+    "framer-motion": "^12.23.26",
+    "lucide-react": "^0.462.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-error-boundary": "^6.1.0",
+    "react-router-dom": "^7.13.0"
+  }
+}

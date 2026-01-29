@@ -4,163 +4,130 @@
 
 ## 🎯 Vision
 
-Skillverse is a Jac full-stack, AI-powered career navigation platform designed to bridge the gap between where professionals are today and where they want to be tomorrow. By leveraging real-time job-market intelligence and explainable skill graphs, Skillverse provides personalized, actionable guidance for career advancement.
+Skillverse is a **Jac full-stack**, AI-powered career navigation platform designed to bridge the gap between where professionals are today and where they want to be tomorrow. By leveraging real-time job-market intelligence and explainable skill graphs, Skillverse provides personalized, actionable guidance for career advancement.
+
+## 📺 Demo & Learn More
+
+- **[Watch the Demo](https://drive.google.com/file/d/1DGKSzi5Voi7k1Bw6hyazGQ-JkVlk9rgu/view?usp=sharing)** – See Skillverse in action (Google Drive).
+- **[View the Pitch Deck](https://prezi.com/p/edit/uujsstwfrzxn/)** – Visit our Prezi pitch deck to learn more about the product, vision, and roadmap.
+
+---
 
 ## 🏗️ Architecture Overview
 
-### Frontend Stack
-- **React 18** + **Vite** – Modern, fast UI framework
-- **TailwindCSS** – Utility-first CSS for rapid styling
-- **Zustand** – Lightweight client-side state management
-- **Framer Motion** – Polished animations and transitions
-- **React Hook Form** – Structured user input handling
-- **Jac Client** – Seamless communication with backend walkers
-- **React Flow** – Visual skill graph navigation
-- **Recharts** – Skill demand trends visualization
-- **Socket.io-client** – Real-time market intelligence updates
+The app lives in the **Skillverse/** folder. The UI is written in **Jac** (compiles to React) and served by the Jac dev server; the client bundle is built from compiled Jac output.
 
-### Backend Stack
-- **JacLang** – AI-native programming language
-- **OSP Graph** – Graph modeling of users, skills, roles, courses, certifications, and job postings
-- **Walkers** – Resume parsing, graph updates, job-market ingestion, and progress tracking
-- **byLLM** – AI-powered extraction, gap analysis, summarization, and roadmap generation
+### Frontend (Jac → React)
+
+- **Jac** – UI and routing in `app.jac` (compiles to React/JSX via Jac client)
+- **React 19** + **Vite 7** – Runtime and build
+- **Tailwind CSS 4** – Styling
+- **React Router** – Client-side routing
+- **Framer Motion** – Animations (sidebar, nav, transitions)
+- **Lucide React** – Dashboard icons
+- **Font Awesome** – Icons across the rest of the app
+- **@jac/runtime** – Router, Link, auth helpers (`jacLogin`, `jacLogout`, etc.)
+
+### Backend / Data Model (Jac)
+
+- **JacLang** – Server and app entry (`jac start app.jac`)
+- **nodes.jac** – OSP-style graph: `User`, `Skill`, `Role`, `Course`, `JobPosting`, `TrendSignal` and edges (`HAS_SKILL`, `REQUIRES_SKILL`, `COURSE_TEACHES`, etc.)
+- **jac.toml** – Project config, `base_route_app = "app"`, client plugin enabled
+- **jac-client / jaclang / jac-cloud** – See `Skillverse/requirements.txt`
+
+---
 
 ## 📋 Platform Structure
 
-### Public Portfolio (Before Login / Signup)
+### Public (no login)
 
-Before authentication, Skillverse functions as a professional product portfolio:
+| Route     | Page        | Description                                      |
+|----------|-------------|--------------------------------------------------|
+| `/`      | Home        | Hero, features, how it works, about, contact, CTA |
+| `/about` | About       | Mission, values, team                            |
+| `/contact` | Contact   | Contact form                                     |
+| `/auth`  | Auth        | Login / signup (Get Started)                     |
 
-- **Home** – Vision, value proposition, and how Skillverse works
-- **About** – Product details and "Built by: a team of 3"
-- **Contact** – Feedback and inquiry form
-- **Get Started** – Login / Signup entry point
+### Authenticated (dashboard)
 
-This stage focuses on branding, clarity, and trust-building.
+| Route        | Page     | Description                                      |
+|-------------|----------|--------------------------------------------------|
+| `/dashboard` | Dashboard | Single-page dashboard with tabbed content      |
 
-### Authenticated Platform (After Login / Signup)
+**Dashboard tabs:** Overview, Resume, Career Targets, Skill Gap, Learning Roadmap, Market Intelligence, Progress, Profile.
 
-Once authenticated, users unlock the full Skillverse experience:
+Once authenticated, users unlock the full Skillverse experience: Resume/CV intelligence (byLLM), career target selection, skill gap analysis, personalized learning roadmap, visual career navigation, progress tracking, real-time market intelligence, and smart recommendations.
 
-#### 1. Resume / CV Intelligence (byLLM-powered)
-- Users upload a resume/CV
-- byLLM extracts structured data:
-  - Skills (technical & soft)
-  - Certifications
-  - Education background
-  - Work experience
-  - Tools and technologies
-- Extracted data is mapped directly into the OSP graph as nodes and edges
-
-#### 2. Career Target Selection
-- Users select:
-  - Target job roles
-  - Career tracks
-  - Emerging or high-growth skills
-- Roles and skills are pulled from live job-market signals
-
-#### 3. Skill Gap Analysis (byLLM)
-- byLLM compares:
-  - Current skill graph (from resume + progress)
-  - Required skills for selected roles
-  - Emerging market-demand skills
-- Identifies:
-  - Missing skills
-  - Weak or outdated skills
-  - Priority skills based on demand
-
-#### 4. Personalized Learning Roadmap
-- byLLM generates a step-by-step learning roadmap:
-  - Courses (online, certifications, bootcamps)
-  - Projects to build practical experience
-  - Recommended timelines and milestones
-- Roadmap adapts dynamically as:
-  - User completes milestones
-  - Market demand changes
-
-#### 5. Visual Career Navigation
-- **React Flow** displays:
-  - Skill → Course → Role relationships
-  - Clear visual explanation of how learning leads to careers
-- **Recharts** shows:
-  - Skill demand trends
-  - Role popularity over time
-
-#### 6. Progress Tracking & Feedback
-- Users:
-  - Mark skills as learned
-  - Upload certificates
-  - Log completed projects
-- Walkers update the OSP graph instantly via Jac Client `spawn()`
-
-#### 7. Real-Time Market Intelligence
-- Socket.io-client pushes:
-  - Alerts for emerging high-demand skills
-  - Notifications when user-selected roles shift in demand
-- Learning plans are automatically revised
-
-#### 8. Smart Recommendations
-- Suggested:
-  - Portfolio projects aligned with target roles
-  - Certifications with highest ROI
-  - Alternative career paths based on existing skills
-  - Career readiness score indicating how close a user is to a role
-  - Resume improvement tips generated from skill gaps
-  - Periodic re-analysis without re-uploading CV
-
-## 🚀 Getting Started
-
-### Running Jac Code
-
-Make sure node modules are installed:
-```bash
-npm install
-```
-
-To run your Jac code, use the Jac CLI:
-```bash
-jac serve app.jac
-```
+---
 
 ## 📦 Project Structure
 
 ```
-Skillverse/
-├── app.jac          # Main Jac application file
-├── nodes.jac        # Graph node and edge definitions
-├── package.json     # Node.js dependencies
-├── public/          # Static assets
-└── static/          # Additional static resources
+SkillVerse/
+├── README.md           # This file (project root)
+├── LICENSE
+├── Skillverse/         # Jac app
+│   ├── app.jac         # Main app: routes, pages, dashboard
+│   ├── nodes.jac       # Graph node/edge definitions
+│   ├── jac.toml        # Jac project config
+│   ├── package.json    # Node deps (React, Vite, Tailwind, etc.)
+│   ├── requirements.txt # Python: jac-client, jaclang, jac-cloud
+│   ├── src/            # Runtime/entry
+│   ├── static/         # Static assets
+│   └── .jac/client/    # Compiled app, Vite configs
 ```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Python 3** with `jaclang` and `jac-client`
+- **Node.js**
+
+### Run the app
+
+```bash
+cd Skillverse
+pip install -r requirements.txt
+npm install
+jac start app.jac
+```
+
+Open **http://localhost:8000/** in your browser.
+
+For a quick overview, check out the [pitch deck](https://prezi.com/p/edit/uujsstwfrzxn/).
+
+---
 
 ## 🔑 Key Features
 
-- ✅ **Explainable Skill Graphs** – Visual representation of skill relationships
-- ✅ **Real-Time Market Intelligence** – Live job-market signals and alerts
-- ✅ **AI-Powered Analysis** – byLLM for resume parsing and gap analysis
-- ✅ **Dynamic Learning Roadmaps** – Adaptive plans that evolve with market changes
-- ✅ **Progress Tracking** – Real-time graph updates as users learn and grow
-- ✅ **Smart Recommendations** – Data-driven career guidance
+- Single Jac codebase (`app.jac`) compiling to React
+- Graph model in `nodes.jac` (users, skills, roles, courses, jobs)
+- Dashboard: Overview, Resume, Career targets, Skill gap, Learning roadmap, Market intelligence, Progress, Profile
+- Framer Motion + Lucide; responsive sidebar; dark/light theme
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+MIT License – see [LICENSE](LICENSE).
+
+---
 
 ## 👥 Team
-
-Built by a team of 3 passionate developers:
 
 - **Denis Mwanzia**
 - **Doris Muasya**
 - **James Ngaruiya**
 
+---
+
 ## 🏆 Hackathon
 
-This project was developed as part of a hackathon organized by:
-
-- **The Open University of Kenya (OUK)**
-- **BCS Technology International Pty Limited, Australia**
+Developed for a hackathon by **The Open University of Kenya (OUK)** and **BCS Technology International Pty Limited, Australia**.
 
 ---
 
-**Ready to navigate your career path? Let's build Skillverse!** 🚀
+**Ready to navigate your career path?** [Watch the demo](https://drive.google.com/file/d/1DGKSzi5Voi7k1Bw6hyazGQ-JkVlk9rgu/view?usp=sharing) or [visit the pitch deck](https://prezi.com/p/edit/uujsstwfrzxn/) to learn more. 🚀
